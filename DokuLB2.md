@@ -60,24 +60,26 @@ Danach ist die VM in Virtualbox ersichtlich und kann benützt werdenVa
 
 Hier sind die wichtigsten Vagrant Befehle aufgelistet:
 
-Vagrant init      #Initialisiert die Vagrant Umgebung im aktuellen Verzeichnis und erstellt ein Vagrantfile
-Vagrant up        #Erzeugt und Konfiguriert eine Virtuelle Maschine basierend auf dem Vagrantfile
-Vagrant ssh       #Verbindung zur VM per SSH wird hergestellt
-Vagrant status    #Zeigt den aktuellen Status der VM an
-Vagrant port      #Zeigt die Weitergeleiteten Ports der VM an
-Vagrant halt      #VM wird gestoppt
-Vagrant destroy   #VM wird gestoppt und gelöscht
+| Befehl           |Beschreibung                                                                             |
+| -----------------|:---------------------------------------------------------------------------------------:|
+| Vagrant init     |Initialisiert die Vagrant Umgebung im aktuellen Verzeichnis und erstellt ein Vagrantfile |
+| Vagrant up       |Erzeugt und Konfiguriert eine Virtuelle Maschine basierend auf dem Vagrantfile |
+| Vagrant ssh      |Verbindung zur VM per SSH wird hergestellt| 
+| Vagrant status   |Zeigt den aktuellen Status der VM an                                                     | 
+| Vagrant port     |Zeigt die Weitergeleiteten Ports der VM an                                               | 
+| Vagrant halt     |VM wird gestoppt                                                                         | 
+| Vagrant destroy  |VM wird gestoppt und gelöscht                                                            | 
 
 ### Webserver
 
 Der Webserver kann anschliessend auf der VM installiert werden. Dazu wird folgender Befehl verwendet:
 
-  $ sudo apt-get install apache2
+   $  sudo apt-get install apache2
   
 Da wir dies aber automatisieren wollen, können wir den schnelleren, einfacheren Weg über Vagrant benützen
 
-  $ cd m300/vagrant/web
-  $ vagrant up
+   $  cd m300/vagrant/web
+   $  vagrant up
   
 Anschliessend ist der Webserver installiert und kann auf der VM im Webbrowser unter http://127.0.0.1 erreicht werden.
 
