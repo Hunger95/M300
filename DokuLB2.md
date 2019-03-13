@@ -9,9 +9,9 @@ Ich werde diesen am 15.3.2019 abschliessen. Mit Vagrant habe ich bisher noch kei
 Virtualisierung und die Automatisierung davon ist für mich aber ein sehr spannendes Thema und ich 
 freue mich mehr darüber zu lernen.
 
-## Einrichten
+### Einrichten
 
-### Git bash
+## Git bash
 
 1. Git bash herunterladen 
 2. Git bash installieren
@@ -21,26 +21,26 @@ Anschliessend wird noch das Repository auf den lokalen Computer kopiert.
 $ git clone https://github.com/mc-b/M300      #Repository klonen
  
   
-### GitHub Account
+## GitHub Account
 
 1. GitHub Account erstellen
 2. Mit Git bash SSH Key erstellen
 3. SSH Key dem Agent hinzufügen
 4. SSH Key dem GitHub Konto hinzufügen
 
-### Virtualbox
+## Virtualbox
 
 1. Virtualbox herunterladen
 2. Virtualbox installieren
 
-### Visual Studio Code
+## Visual Studio Code
 
 1. Visual Studio Code herunterladen
 2. Visual Studio Code installieren
 3. Extensions installieren
 4. Einstellungen anpassen
 
-### Vagrant
+## Vagrant
 
 1. Vagrant herunterladen
 2. Vagrant installieren
@@ -63,22 +63,23 @@ Hier sind die wichtigsten Vagrant Befehle aufgelistet:
 | Befehl           |Beschreibung                                                                             |
 | -----------------|:---------------------------------------------------------------------------------------:|
 | Vagrant init     |Initialisiert die Vagrant Umgebung im aktuellen Verzeichnis und erstellt ein Vagrantfile |
-| Vagrant up       |Erzeugt und Konfiguriert eine Virtuelle Maschine basierend auf dem Vagrantfile |
-| Vagrant ssh      |Verbindung zur VM per SSH wird hergestellt| 
+| Vagrant up       |Erzeugt und Konfiguriert eine Virtuelle Maschine basierend auf dem Vagrantfile           |
+| Vagrant ssh      |Verbindung zur VM per SSH wird hergestellt                                               | 
 | Vagrant status   |Zeigt den aktuellen Status der VM an                                                     | 
 | Vagrant port     |Zeigt die Weitergeleiteten Ports der VM an                                               | 
 | Vagrant halt     |VM wird gestoppt                                                                         | 
 | Vagrant destroy  |VM wird gestoppt und gelöscht                                                            | 
 
-### Webserver
+## Webserver
 
-Der Webserver kann anschliessend auf der VM installiert werden. Dazu wird folgender Befehl verwendet:
+Der Webserver kann anschliessend auf der VM installiert werden. Dazu wird folgender Befehl verwendet.
 
-   $  sudo apt-get install apache2
+   $ sudo apt-get install apache2
   
-Da wir dies aber automatisieren wollen, können wir den schnelleren, einfacheren Weg über Vagrant benützen
+Da wir dies aber automatisieren wollen, können wir den schnelleren, einfacheren Weg über Vagrant benützen.
 
    $  cd m300/vagrant/web
+   
    $  vagrant up
   
 Anschliessend ist der Webserver installiert und kann auf der VM im Webbrowser unter http://127.0.0.1 erreicht werden.
