@@ -9,7 +9,7 @@ da wir aber so gut wie nur Microsoft Produkte verwenden, habe ich was die Virual
 mit Linux angeht nur Erfahrungen aus dem ÜK 340 welchen ich Momentan absolviere. 
 Ich werde diesen am 15.3.2019 abschliessen. Mit Vagrant habe ich bisher noch keine Erfahrungen gemacht.
 Virtualisierung und die Automatisierung davon ist für mich aber ein sehr spannendes Thema und ich 
-freue mich mehr darüber zu lernen.
+freue mich mehr darüber zu lernen. Auch Markdown und Github habe ich bis anhin noch nie verwendet.
 
 ### Einrichten
 
@@ -93,21 +93,44 @@ Hier sind die wichtigsten Vagrant Befehle aufgelistet:
     !    +--------------------+          +---------------------+    !
     !                                                               !	
     +---------------------------------------------------------------+
+    
+##   Beschreibung
 
-## Webserver
+ * Web Server mit Apache und MySQL
+ * DB Server mit MySQL
+ * Die Verbindung zu den VM's wird über den Internen Netzwerk Adapter hergestellt.
+ * Der HTTP Port (80) ist von ausssen freigegeben.
+ * Für den Zugriff per ssh muss in dem Vagrantfile der Name definiert werden
+ 
+     $ vagrant ssh web
+     $ vagrant ssh database
+     
+### Konfiguration Vagrant Umgebung
 
-Der Webserver kann anschliessend auf der VM installiert werden. Dazu wird folgender Befehl verwendet.
 
-   $ sudo apt-get install apache2
-  
-Da wir dies aber automatisieren wollen, können wir den schnelleren, einfacheren Weg über Vagrant benützen.
+Als erstes wird mit
 
-   $  cd m300/vagrant/web
-   
-   $  vagrant up
-  
-Anschliessend ist der Webserver installiert und kann auf der VM im Webbrowser unter http://127.0.0.1 erreicht werden.
+$ vagrant add box ubuntu/xenial 
 
+eine Box installiert, hier wird das Betreibssystem bereitgestellt. Anschliessend wird mit:
+
+$ vagrant init ubuntu/xenial64 
+
+ein Vagrant file erstellt, welches aber noch bearbeitet werden muss. Die Grundkonfiguration wird ohne änderungen am Vagrantfile installiert, die Softwareinstallation, benötigt aber zusätzliche änderungen. Dafür verwende ich ein Shell Skript welches im Vagrant file als provisionierung angegeben wird. 
+
+ $ db.vm.provision "shell", path: "db.sh"
+ 
+#### Testing
+
+Die beiden VM's können dann durch das starten des Vagrant file's mit:
+
+$ vagrant up
+
+aufgesetzt werden. Der Vorgang war erfolgreich, wenn die Datenbank im Webbrowser unter (http://127.0.0.1:8080/adminer.php) erreichbar ist. Das Login fenster erscheint und es kann mit (admin / 1234) eingeloggt werden.
+
+
+
+# K4
 
 
 ## Firewall und Reverse Proxy
@@ -115,5 +138,51 @@ Anschliessend ist der Webserver installiert und kann auf der VM im Webbrowser un
    Für die Firewall wird ufw verwendet, diese kann ganz eifach per Command Line installiert werden.
    
     $ sudo apt-get install ufw
+    $ sudo ufw enable
     
+### Firewall Rules
+
+#### Webserver
+
+Auf dem Webserver müssen die Ports 80 und 22 geöffnet werden (HTTP und SSH)
+
+    $ sudo ufw allow 80/tcp
+    $ sudo ufw allow from "Host-IP" to any port 22
+    
+#### DB Server
+
+Auf dem DB Server muss der Webserver freigegeben werden und der Zugriff via ssh vom Hostsystem
+
+   $ sudo ufw allow "IP Webserver" to any port 3306
+   $ sudo ufw allow from "IP Host" to any port 22
    
+### Reverse Proxy
+
+Auf dem Webserver werden die folgenden Module installiert:
+
+  $ sudo apt-get install libapache2-mod-proxy-html
+  $ sudo apt-get install libxm12-dev
+  
+Danach kann der Proxy mit folgenden Befehlen aktiviert werden:
+
+  $ sudo a2enmod proxy
+  $ sudo a2enmod proxy_html
+  $ sudo a2enmod proxy_http
+
+Danach muss noch die Datei im Verzeichniss /etc/apache2/apache2.conf bearbeitet werden:
+
+ Servername localhost
+ 
+Webserver neu starten:
+
+$ sudo service apache2 restart
+    
+# K5
+
+# Wissenszuwachs
+
+Ich kann nun mit Vagrant einzelne und auch mehrere VM's mit sehr wenig Aufwand aufsetzen kann. Ausserdem verstehe ich wie ein Vagrant file mit einem Shell Skript bearbeiten, und so automatisch Packages installieren kann. Was Github angeht, ich habe gelernt wie Projekte erstellt und bearbeitet werden können. Ausserdem habe ich mich mit der Community etwas auseinandergesetzt. Mit Markdown hatte ich anfangs einige Schwierigkeiten, mittlerweile finde ich mich aber auch hier recht gut zurecht. Die Linux befehle welche im "Git bash" verwendet wurden kannte ich schon, da habe ich also nichts neues gelernt. Auch mit Web- und Datenbankservern habe ich schon gearbeitet.
+
+# Reflexion
+
+Mir hat die Aufgabenstellung anfangs nicht so spass gemacht, weil ich recht viele Probleme mit Vagrant hatte. Ich habe mir dann im Betrieb noch Zeit genommen um weiter daran zu arbeiten und bin dann auf den richtigen Weg gekommen. Als es dann funktioniert hat, hatte ich mehr spass und bin auch gut vorangekommen. Ich habe vor in der Freien Zeit im Betrieb noch andere Automatisierungsprodukte anzuschauen und dass am besten passende für mich zu finden.
